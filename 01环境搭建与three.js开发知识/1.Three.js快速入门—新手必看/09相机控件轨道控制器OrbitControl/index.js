@@ -10,9 +10,9 @@ const geometry = new THREE.BoxGeometry(50, 50, 50);
 const material = new THREE.MeshBasicMaterial({
   // 漫反射材质
   // const material = new THREE.MeshLambertMaterial({
-  color: "#017CD9",
+  color: "#00AFC3",
   transparent: true, //开启透明
-  opacity: 0.6, //透明度
+  opacity: 0.9, //透明度
 });
 // 给三维场景添加一个网格模型
 const mesh = new THREE.Mesh(geometry, material);
