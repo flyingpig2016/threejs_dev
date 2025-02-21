@@ -2,25 +2,33 @@ import * as THREE from "three";
 // 创建一个三维场景
 const scene = new THREE.Scene();
 // 给三维场景添加一个几何体
-const geometry = new THREE.BoxGeometry(50, 50, 50);
+const geometry = new THREE.BoxGeometry(100, 100, 100);
 // 给三维场景添加一个材质
 // const material = new THREE.MeshBasicMaterial({
 // 漫反射材质
 const material = new THREE.MeshLambertMaterial({
-  color: 0x00ff00,
+  color: 0x00ffff,
   transparent: true, //开启透明
-  opacity: 0.6, //透明度
+  opacity: 0.9, //透明度
 });
 // 给三维场景添加一个网格模型
 const mesh = new THREE.Mesh(geometry, material);
-mesh.position.set(50, 10, 0);
+// mesh.position.set(50, 10, 0);
 // 将网格添加到三维场景中
 scene.add(mesh);
 
+// 创建一个坐标系
+const axesHelper = new THREE.AxesHelper(100);
+scene.add(axesHelper);
+
 // 参数1：光源颜色 参数2：光照强度
-const pointLight = new THREE.PointLight(0xffffff, 1);
+const pointLight = new THREE.PointLight(0xffffff, 1.0);
+pointLight.intensity = 2.0; //光照强度
+pointLight.decay = 0.0; //光源光照强度不随距离改变衰减
+console.log("pointLight", pointLight);
+
 // 设置光源位置
-pointLight.position.set(200, 200, 200);
+pointLight.position.set(400, 200, 300);
 // 将光源添加到三维场景中
 scene.add(pointLight);
 
@@ -30,17 +38,13 @@ const height = 500;
 const camera = new THREE.PerspectiveCamera(30, width / height, 1, 3000);
 console.log("camera", camera);
 // 设置相机位置
-camera.position.set(200, 200, 200);
+camera.position.set(292, 223, 185); //相机在Three.js三维坐标系中的位置
 // camera.position.set(-1000, 0, 0);
 camera.lookAt(0, 0, 0); // 相机视线 相机看向坐标原点
 // camera.lookAt(0, 10, 0); // 相机视线 相机看向y轴一点
 // camera.lookAt(mesh.position); // 相机视线 相机看向网格模型
 // 将相机添加到三维场景中
-scene.add(camera);
-
-// 创建一个坐标系
-const axesHelper = new THREE.AxesHelper(100);
-scene.add(axesHelper);
+// scene.add(camera);
 
 // 创建一个渲染器
 const renderer = new THREE.WebGLRenderer();

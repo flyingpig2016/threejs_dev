@@ -7,10 +7,10 @@ const scene = new THREE.Scene();
 // 给三维场景添加一个几何体
 const geometry = new THREE.BoxGeometry(50, 50, 50);
 // 给三维场景添加一个材质
-const material = new THREE.MeshBasicMaterial({
-  // 漫反射材质
-  // const material = new THREE.MeshLambertMaterial({
-  color: "#00AFC3",
+// const material = new THREE.MeshBasicMaterial({
+// 漫反射材质
+const material = new THREE.MeshLambertMaterial({
+  color: 0x00ffff,
   transparent: true, //开启透明
   opacity: 0.9, //透明度
 });
@@ -20,10 +20,16 @@ mesh.position.set(50, 10, 0);
 // 将网格添加到三维场景中
 scene.add(mesh);
 
+// 创建一个坐标系
+const axesHelper = new THREE.AxesHelper(100);
+scene.add(axesHelper);
+
 // 参数1：光源颜色 参数2：光照强度
 const pointLight = new THREE.PointLight(0xffffff, 1);
+pointLight.intensity = 2.0; //光照强度
+pointLight.decay = 0.0; //光源光照强度不随距离改变衰减
 // 设置光源位置
-pointLight.position.set(200, 200, 200);
+pointLight.position.set(400, 200, 200);
 // 将光源添加到三维场景中
 scene.add(pointLight);
 
@@ -41,10 +47,6 @@ camera.lookAt(0, 0, 0); // 相机视线 相机看向坐标原点
 // 将相机添加到三维场景中
 scene.add(camera);
 
-// 创建一个坐标系
-const axesHelper = new THREE.AxesHelper(100);
-scene.add(axesHelper);
-
 // 创建一个渲染器
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(width, height); // 设置渲染器的大小
@@ -52,10 +54,12 @@ renderer.render(scene, camera); //执行一个渲染操作。类比相机的拍�
 // 将渲染结果添加到网页上
 // document.body.appendChild(renderer.domElement);
 document.getElementById("webgl").appendChild(renderer.domElement);
+console.log("camera.position", camera.position);
 
 // 设置相机控件轨道控制器
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.addEventListener("change", () => {
+  // 相机改变后，重新渲染，生成一张canvas图片
   renderer.render(scene, camera); //执行渲染操作
   console.log("camera.position", camera.position);
 });
